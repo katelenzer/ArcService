@@ -1,32 +1,49 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset=utf-8 />
-  <title>Terrain from Arc</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Simple Image Service</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.14/esri/css/esri.css" />
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
-  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
+    <style>
+      html, body, #map { height: 100%; width: 100%; margin: 0; padding: 0; }
+    </style>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="//cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
+    <script src="http://js.arcgis.com/3.14/"></script>
+    <script>
+      var map;
+      require([
+        "esri/map", "esri/layers/ArcGISImageServiceLayer", 
+        "esri/layers/ImageServiceParameters", "dojo/parser", "dojo/domReady!"
+      ], function(
+        Map, ArcGISImageServiceLayer, 
+        ImageServiceParameters, parser
+      ) {
+        parser.parse();
 
-  <style>
-    body { margin:0; padding:0; }
-    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
-  </style>
-</head>
-<body>
+        map = new Map("map", {
+          basemap: "topo",
+          center: [-79.40, 43.64],
+          zoom: 12
+        });
 
-<div id="map"></div>
+        var params = new ImageServiceParameters();
+        params.noData = 0;
+        var imageServiceLayer = new ArcGISImageServiceLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Toronto/ImageServer", {
+          imageServiceParameters: params,
+          opacity: 0.75
+        });
+        map.addLayer(imageServiceLayer);
+      });
+    </script>
+  </head>
+  
+  <body>
+    <div id="map"> </div>
+  </body>
 
-<script>
-  var map = L.map('map').setView([ 35, -106], 8);
-
-  L.esri.tiledMapLayer({
-    url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
-  }).addTo(map);
-</script>
-
-</body>
 </html>
+
