@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset=utf-8 />
-  <title>Topo from ESRI Map Service</title>
+  <title>Terrain from Arc</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <!-- Load Leaflet from CDN-->
@@ -24,7 +24,7 @@
   var map = L.map('map').setView([ 35, -106], 8);
 
   L.esri.tiledMapLayer({
-    url: "http://maps1.arcgisonline.com/ArcGIS/rest/services/USA_Federal_Lands/MapServer"
+    url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer"
   }).addTo(map);
 </script>
 
